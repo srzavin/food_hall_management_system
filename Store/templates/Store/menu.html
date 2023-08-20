@@ -1,4 +1,4 @@
-<!-- crispmenu.html -->
+<!-- menu.html -->
 
 <!DOCTYPE html>
 {% extends 'baseT/base.html' %}
@@ -24,7 +24,7 @@
                     </li>
                   </ul>
                 </li>
-                <li><a href="listings.html"><span>Listings</span></a></li>
+                <li><a href={% url 'order_status' %}><span>Order Status</span></a></li>
                 <li><a href="about.html"><span>About</span></a></li>
                 <li><a href='{%  url 'cart' %}'><span>Cart</span></a></li>
                   {% if username == '' %}
@@ -36,38 +36,52 @@
             </nav>
 {% endblock %}
 {% block content %}
-  <h1 style="color: navajowhite;" >{{ store }}</h1>
-<div class="p-3 mb-2 bg-white text-dark bg-opacity-50 rounded">
+  <h1 style="color: navajowhite;">{{ store }}</h1>
 
-  {% for food in menu %}
-    <div class="menu-item">
-      <div class="item-details">
-        <h2>{{ food.name }} - {{ food.price }} tk.</h2>
-      </div>
-        <form method="POST" class="add-to-cart-form" >
-            {% csrf_token %}
-
-
-            <input type="hidden" name="food_id" value="{{ food.id }}">
-    <button type="submit" class="btn btn-info">Add to Cart</button>
-        </form>
-
-
-
+  <div class="p-3 mb-2 bg-white text-dark bg-opacity-50 rounded">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="{% url 'merchant' %}" class="btn btn-primary ml-auto">Edit</a>
     </div>
 
-        <div class="container-fluid rounded bg-dark" >
-        {% for message in messages %}
-             <li style="color: #ff0000"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Food Item</th>
+          <th>Regular Price</th>
+          <th>Discounted Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for food in menu %}
+          <tr>
+            <td>{{ food.name }}</td>
+            <td>{{ food.price }} tk.</td>
+            <td>
+              {% if food.id in discounted_prices %}
+                {{ discounted_prices.food.id }} tk.
+              {% else %}
+                N/A
+              {% endif %}
+            </td>
+            <td>
+              <form method="POST" class="add-to-cart-form">
+                {% csrf_token %}
+                <input type="hidden" name="food_id" value="{{ food.id }}">
+                <button type="submit" class="btn btn-info">Add to Cart</button>
+              </form>
+            </td>
+          </tr>
         {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="container-fluid rounded bg-dark">
+      {% for message in messages %}
+        <li style="color: #ff0000"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
     </div>
-
-  {% endfor %}
-    </div>
-
-
-
-
+  </div>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<style>
+
+  body {
+    margin-top: 20px;
+}
+
+</style>
+
+</head>
+<body>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <address>
+                        <strong>Code Chef</strong>
+                        <br>
+                        Location
+                        <br>
+                        Location
+                        <br>
+                        <abbr title="Phone">P:</abbr> (213) 484-6829
+                    </address>
+                </div>
+                <div>
+                  <h6>Time of Payment </h6>
+                  <p id="date-container"></p> <!-- This is where the date and time will be displayed -->
+                </div>
+
+                <script src="script.js"></script>
+
+            <div class="row">
+                <div class="text-center">
+                    <h1>Receipt</h1>
+                </div>
+
+
+                <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">SL</th>
+                    <th scope="col">Name of Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                      <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for item in cartV %}
+
+                  <div class="menu-item">
+                    <div class="item-details">
+
+
+
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{  item.product.name  }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.quantity }}</td>
+
+                  </tr>
+
+                    </div>
+                  </div>
+                {% endfor %}
+
+                </tbody>
+
+              </table>
+
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 style="color: #1b1e21">Paid = {{ totalPrice }}</h3>
+                  </div>
+                </div>
+              </div>
+
+
+                <div class="text-center">
+                  <button onclick="window.location.href='http://127.0.0.1:8000/store/RtH/';">
+                    Return to Home Page
+                  </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    function getCurrentDateAndTime() {
+  const dateTime = new Date();
+  return dateTime.toLocaleString();
+  }
+
+  // Target an HTML element to display the current date and time
+  const dateDisplay = document.getElementById("date-container");
+
+  // Set the innerHTML of the element to the current date and time returned by the function
+  dateDisplay.innerHTML = getCurrentDateAndTime();
+
+</script>
+
+</body>
+</html>

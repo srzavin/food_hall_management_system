@@ -87,10 +87,18 @@
       <h1 style="color: #1b1e21">Total Price = {{ totalPrice }}</h1>
     </div>
     <div class="col-md-4">
-      <form method="post" ">
+ <form method="post">
         {% csrf_token %}
-        <button class="btn btn-info" type="submit" name="checkout" value="Test">Checkout</button>
+        <button class="btn btn-info" type="submit" name="checkout" value="Test">Pay with Cash</button>
+
       </form>
+      <br>
+      <button style="background-color:deepskyblue; border-color:white; color:black" onclick="window.location.href='http://127.0.0.1:8000/store/OPM/';">
+        Other Payment Methods
+      </button>
+
+
+
     </div>
   </div>
 </div>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% extends 'baseT/base.html' %}
+{% block navbar %}
+               <nav class="site-navigation position-relative text-center" role="navigation">
+
+              <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li class="active"><a href="{%  url 'adminPanel' %}"><span>Home</span></a></li>
+ <button type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal"  data-bs-target="#myModal">
+                Edit Store
+            </button>
+              </ul>
+            </nav>
+{% endblock %}
+
+{% block content %}
+    <h1 style="color: #f7f7f7">Administrator</h1>
+    <div class="col text-right">
+                    <form method="post" action="{%  url 'addStore' %}">
+                {% csrf_token %}
+                <button  class="btn btn-primary "  type="submit" name="newStore" value="1">Add New Store</button>
+            </form>
+    </div>
+
+<div class="row mt-4">
+    {% for E in eBooks %}
+        <div class="col mt-4">
+            <div class="card" style="width: 18rem;">
+            <img width="600" height="300" src="{{ E.cvr_url }}" class="card-img-top" alt="...">
+            <div class="card-body  bg-opacity-50 rounded">
+                <h5 class="card-title">{{ E.title }}</h5>
+                <p> Store ID: {{ E.id }} </p>
+
+
+
+
+
+
+
+
+                <form method="post" >
+                    {% csrf_token %}
+                    <button  class="btn btn-danger "  type="submit" name="remove" value="{{ E.id }}">Remove</button>
+                </form>
+
+
+            </div>
+        </div>
+        </div>
+
+    {% endfor %}
+
+                                <!-- Modal -->
+
+                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Store Edit</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Your form text field -->
+
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="editID" placeholder="Enter Store ID">
+                                            <input type="text" class="form-control" name="newName" placeholder="Enter New Name">
+                                            <input type="text" class="form-control" name="newUrl" placeholder="Enter New Image Link">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+{% endblock %}
